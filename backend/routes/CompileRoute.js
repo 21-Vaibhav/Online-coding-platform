@@ -11,7 +11,7 @@ const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // API endpoint for compiling C++ code
-app.post('/', (req, res) => {
+router.post('/', (req, res) => {
   const code = req.body.code;
   const input = req.body.input;
   const cppFilePath = path.join(__dirname, "temp.cpp");

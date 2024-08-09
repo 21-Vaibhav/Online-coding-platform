@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+/// develp on hover feature
+
 const Home = () => {
   const navigate = useNavigate();
 
