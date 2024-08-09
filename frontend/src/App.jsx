@@ -21,14 +21,16 @@ function App() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>C++ Code Playground</h1>
+      <br />
       <textarea
         rows="10"
         cols="50"
         value={code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Write your C++ code here"
-        style={{ width: "100%", fontSize: "16px", fontFamily: "monospace" }}
+        style={{ padding: "10px", width: "100%", fontSize: "16px", fontFamily: "monospace" }}
       />
+      <br />
       <br />
       <h1>Custom Input</h1>
       <textarea
@@ -37,8 +39,9 @@ function App() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Provide your custom input here"
-        style={{ width: "100%", fontSize: "16px", fontFamily: "monospace", marginTop: "10px" }}
+        style={{ padding: "10px", width: "100%", fontSize: "16px", fontFamily: "monospace", marginTop: "10px" }}
       />
+      <br />
       <br />
       <button
         className='px-8 py-4 rounded-medium border-2 border-blue-400'
@@ -46,8 +49,11 @@ function App() {
       >
         Compile & Run
       </button>
+      <br />
+      <br />
       <h2>Output:</h2>
-      <pre style={{ background: "lightgray", padding: "10px" }}>{output}</pre>
+      <br />
+      <pre style={{ background: "lightgray", padding: "10px", color:"black" }}>{output}</pre>
     </div>
   );
 }
