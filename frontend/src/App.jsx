@@ -1,16 +1,16 @@
-// app.jsx
-
 import React, { useState } from "react";
 import axios from "axios";
 
 function App() {
   const [code, setCode] = useState("");
+  const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
 
   const handleCompile = async () => {
     try {
       const response = await axios.post("http://localhost:3001/compile", {
         code,
+        input
       });
       setOutput(response.data.output);
     } catch (error) {
@@ -30,13 +30,24 @@ function App() {
         style={{ width: "100%", fontSize: "16px", fontFamily: "monospace" }}
       />
       <br />
-      <button className='px-8 py-4 rounded-medium border-2 border-blue-400'
+      <h1>Custom Input</h1>
+      <textarea
+        rows="5"
+        cols="50"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Provide your custom input here"
+        style={{ width: "100%", fontSize: "16px", fontFamily: "monospace", marginTop: "10px" }}
+      />
+      <br />
+      <button
+        className='px-8 py-4 rounded-medium border-2 border-blue-400'
         onClick={handleCompile}
       >
         Compile & Run
       </button>
       <h2>Output:</h2>
-      <pre style={{ background: "red", padding: "10px" }}>{output}</pre>
+      <pre style={{ background: "lightgray", padding: "10px" }}>{output}</pre>
     </div>
   );
 }

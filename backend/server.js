@@ -16,12 +16,17 @@ const __dirname = path.dirname(__filename);
 // API endpoint for compiling C++ code
 app.post("/compile", (req, res) => {
   const code = req.body.code;
+  const input = req.body.input;
   const cppFilePath = path.join(__dirname, "temp.cpp");
   const exeFilePath = path.join(__dirname, "temp"); // Without extension for cross-platform compatibility
+  const tempInputFilePath = path.join(__dirname, "tempInput.txt");
 
   try {
     // Save the code to a temporary file
     fs.writeFileSync(cppFilePath, code);
+    
+    // Save the input to a temporary file
+    fs.writeFileSync(tempInputFilePath, input);
 
     // Compile the code using g++
     const compileCommand = `g++ ${cppFilePath} -o ${exeFilePath}`;
@@ -33,7 +38,9 @@ app.post("/compile", (req, res) => {
 
       // Determine the execution command based on the platform
       const runCommand =
-        process.platform === "win32" ? `${exeFilePath}.exe` : `${exeFilePath}`;
+        process.platform === "win32"
+          ? `${exeFilePath}.exe < ${tempInputFilePath}`
+          : `${exeFilePath} < ${tempInputFilePath}`;
 
       exec(runCommand, (runError, runStdout, runStderr) => {
         if (runError) {
@@ -45,6 +52,7 @@ app.post("/compile", (req, res) => {
         // Clean up the temporary files
         try {
           fs.unlinkSync(cppFilePath);
+          fs.unlinkSync(tempInputFilePath);
           fs.unlinkSync(
             exeFilePath + (process.platform === "win32" ? ".exe" : "")
           );
