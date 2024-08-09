@@ -1,9 +1,10 @@
 import React from 'react'
+import CodeEditor from '../components/CodeEditor'
 
-const ContestDetails = () => {
+const Playground = () => {
   return (
-    <div>ContestDetails</div>
+    <CodeEditor />
   )
 }
 
-export default ContestDetails
+export default Playground

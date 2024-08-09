@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ProblemDetails = () => {
+const Arena = () => {
   return (
-    <div>ProblemDetails</div>
+    <div>Arena</div>
   )
 }
 
-export default ProblemDetails
+export default Arena
