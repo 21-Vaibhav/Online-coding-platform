@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>C++ Code Editor</h1>
+      <h1>C++ Code Playground</h1>
       <textarea
         rows="10"
         cols="50"
@@ -30,14 +30,13 @@ function App() {
         style={{ width: "100%", fontSize: "16px", fontFamily: "monospace" }}
       />
       <br />
-      <button
+      <button className='px-8 py-4 rounded-medium border-2 border-blue-400'
         onClick={handleCompile}
-        style={{ marginTop: "10px", padding: "10px 20px" }}
       >
         Compile & Run
       </button>
       <h2>Output:</h2>
-      <pre style={{ background: "#f4f4f4", padding: "10px" }}>{output}</pre>
+      <pre style={{ background: "red", padding: "10px" }}>{output}</pre>
     </div>
   );
 }
