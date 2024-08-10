@@ -1,3 +1,7 @@
+
+import { useState } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 import React from "react";
 import Split from "react-split";
 import CodeEditor from "./CodeEditor";
@@ -22,6 +26,22 @@ const Workspace = () => {
     ...sectionStyle, // inherit styles from sectionStyle
     backgroundColor: "#252526", // Different background for the editor
   };
+
+  const [problem, setProblem] = useState(null);
+
+  useEffect(() => {
+    const fetchProblem = async () => {
+      try {
+        const response = await fetch("/api/problem");
+        const data = await response.json();
+        setProblem(data);
+      } catch (error) {
+        console.error("Error fetching problem:", error);
+      }
+    };
+
+    fetchProblem();
+  }, []);
 
   return (
     <Split
