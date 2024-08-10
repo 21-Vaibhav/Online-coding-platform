@@ -50,7 +50,7 @@ Memory Usage: N/A`;
       <br />
       <div style={{ position: "relative", width: "100%" }}>
         {/* Highlighted Code */}
-        <SyntaxHighlighter
+        {/* <SyntaxHighlighter
           language="cpp"
           style={solarizedlight}
           customStyle={{
@@ -69,7 +69,7 @@ Memory Usage: N/A`;
           // showLineNumbers={true}
         >
           {code}
-        </SyntaxHighlighter>
+        </SyntaxHighlighter> */}
 
         {/* Textarea */}
         <textarea
@@ -85,8 +85,8 @@ Memory Usage: N/A`;
             padding: "10px",
             fontSize: "16px",
             fontFamily: "monospace",
-            backgroundColor: "transparent",
-            color: "transparent",
+            backgroundColor: "black",
+            color: "white",
             zIndex: 2,
             caretColor: "black",
             border: "1px solid #ccc",

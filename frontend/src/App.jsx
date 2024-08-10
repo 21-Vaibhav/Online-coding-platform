@@ -8,7 +8,6 @@ import Workspace from "./components/Workspace";
 
 function App() {
 
-  const problemId = "two-sum";
   return (
     <Routes>
       <Route path="/" element={<Home />} />

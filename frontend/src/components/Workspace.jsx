@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Split from 'react-split';
+import ArenaCodeEditor from './ArenaCodeEditor';
 
 const Workspace = () => {
   const { id } = useParams();
@@ -24,6 +26,7 @@ const Workspace = () => {
   }
 
   return (
+    <Split className='split' sizes={[50, 50]} minSize={200} expandToMin={false}>
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-semibold text-center text-gray-800 dark:text-gray-200 mt-12 mb-6">
         {problem.title}
@@ -53,6 +56,8 @@ const Workspace = () => {
         <strong>Difficulty:</strong> {problem.difficulty}
       </p>
     </div>
+    <ArenaCodeEditor id={id} />
+    </Split>
   );
 };
 

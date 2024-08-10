@@ -4,12 +4,34 @@ import Prism from "prismjs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism"; // Choose a style
 
-function ArenaCodeEditor() {
+function ArenaCodeEditor({id}) {
+
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
+  const [solution, setSolution] = useState("");
   // const [language, setLanguage] = useState("cpp");
 
+  
+  const [problem, setProblem] = useState(null);
+
+  useEffect(() => {
+    const fetchProblem = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/problem/${id}`);
+        setProblem(response.data.data);
+      } catch (error) {
+        console.error('Error fetching problem:', error);
+      }
+    };
+    fetchProblem();
+  }, [id]);
+
+ 
+
+  if (!problem) {
+    return <div>Loading...</div>;
+  }
   const handleChange = (e) => {
     setCode(e.target.value);
   };
@@ -26,16 +48,17 @@ function ArenaCodeEditor() {
     }
   };
 
+  const test = problem.testCases;
+
   const handleSubmit = async () => {    
     try {
         const response = await axios.post("http://localhost:3001/submit", { 
             code,
-            ///problem id need to be passed
-            //input,
+            testCases: problem.testCases,
         });
-        setOutput(response.data.output);
+        setSolution(response.data.results);
     } catch (error) {
-        setOutput(error.response.data.error);
+        setSolution(error.response.data.error);
     }
 };
 
@@ -45,7 +68,7 @@ function ArenaCodeEditor() {
       <br />
       <div style={{ position: "relative", width: "100%" }}>
         {/* Highlighted Code */}
-        <SyntaxHighlighter
+        {/* <SyntaxHighlighter
           language="cpp"
           style={solarizedlight}
           customStyle={{
@@ -64,7 +87,7 @@ function ArenaCodeEditor() {
           // showLineNumbers={true}
         >
           {code}
-        </SyntaxHighlighter>
+        </SyntaxHighlighter> */}
 
         {/* Textarea */}
         <textarea
@@ -80,8 +103,8 @@ function ArenaCodeEditor() {
             padding: "10px",
             fontSize: "16px",
             fontFamily: "monospace",
-            backgroundColor: "transparent",
-            color: "transparent",
+            backgroundColor: "white",
+            color: "black",
             zIndex: 2,
             caretColor: "black",
             border: "1px solid #ccc",
@@ -128,7 +151,20 @@ function ArenaCodeEditor() {
       <pre style={{ background: "lightgray", padding: "10px", color: "black" }}>
         {output}
       </pre>
+    {solution && (
+        <div>
+            <h3>Results:</h3>
+            {solution.map((result, index) => (
+                <div key={index} style={{ marginBottom: '10px' }}>
+                    <p><strong>Test Case {index + 1}:</strong></p>
+                    <p><strong>Passed:</strong> {result.passed ? "Yes" : "No"}</p>
+                    <p><strong>Output:</strong> {result.output}</p>
+                    <p><strong>Expected Output:</strong> {result.expectedOutput}</p>
+                </div>
+            ))}
     </div>
+)}
+</div>
   );
 }
 
