@@ -10,8 +10,7 @@ import mongoose from "mongoose";
 import { mongoDBURL} from "./config.js";
 import { PORT } from "./config.js";
 
-
-
+//app config
 const app = express();
 
 //middleware
@@ -23,9 +22,7 @@ app.use('/compile', CompileRoute);
 app.use('/problemList', ProblemListRoute);
 app.use('/problem', ProblemRoute);
 app.use('/submit', SubmitRoute);
-// Resolve __dirname in ES6 modules
 
-  
     
 app.listen(3001, () => console.log("Server running on port 3001"));
 

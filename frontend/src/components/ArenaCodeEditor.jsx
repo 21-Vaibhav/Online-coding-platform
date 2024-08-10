@@ -1,11 +1,10 @@
-
 import React, { useState } from "react";
 import axios from "axios";
 import Prism from "prismjs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism"; // Choose a style
 
-function CodeEditor() {
+function ArenaCodeEditor() {
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -27,9 +26,18 @@ function CodeEditor() {
     }
   };
 
-  // const highlightCode = (code) => {
-  //   return Prism.highlight(code, Prism.languages.cpp, 'cpp');
-  // };
+  const handleSubmit = async () => {    
+    try {
+        const response = await axios.post("http://localhost:3001/submit", { 
+            code,
+            ///problem id need to be passed
+            //input,
+        });
+        setOutput(response.data.output);
+    } catch (error) {
+        setOutput(error.response.data.error);
+    }
+};
 
   return (
     <div style={{ padding: "20px" }}>
@@ -107,6 +115,12 @@ function CodeEditor() {
       >
         Compile & Run
       </button>
+      <button
+        className="px-8 py-4 rounded-medium border-2 border-blue-400"
+        onClick={handleSubmit}
+      >
+        Submit
+      </button>
       <br />
       <br />
       <h2>Output:</h2>
@@ -118,4 +132,4 @@ function CodeEditor() {
   );
 }
 
-export default CodeEditor;
+export default ArenaCodeEditor;
