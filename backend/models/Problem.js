@@ -1,6 +1,10 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const ProblemSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: true,
+    },
     title: {
         type: String,
         required: true,
@@ -22,4 +26,4 @@ const ProblemSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model('Problem', ProblemSchema);
+export const Problem = mongoose.model('Problem', ProblemSchema);
