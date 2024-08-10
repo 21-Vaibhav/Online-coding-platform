@@ -4,6 +4,7 @@ import CompileRoute from './routes/CompileRoute.js';
 import ProblemListRoute from "./routes/ProblemListRoute.js";
 import ProblemRoute from "./routes/ProblemRoute.js";
 import SubmitRoute from "./routes/SubmitRoute.js";
+import ContestRoute from "./routes/ContestRoute.js";
 
 import cors from "cors";
 import mongoose from "mongoose";
@@ -22,7 +23,7 @@ app.use('/compile', CompileRoute);
 app.use('/problemList', ProblemListRoute);
 app.use('/problem', ProblemRoute);
 app.use('/submit', SubmitRoute);
-
+app.use('/battleground', ContestRoute);
     
 app.listen(3001, () => console.log("Server running on port 3001"));
 
