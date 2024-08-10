@@ -15,7 +15,7 @@ function App() {
       <Route path="/playground" element={<Playground />} />
       <Route path="/arena" element={<Arena />} />
       <Route path="/battleground" element={<BattleGround />} />
-      <Route path="/workspace" element={<Workspace problemId={problemId} />} />
+      <Route path="/workspace/:id" element={<Workspace />} />
     </Routes>
   );
 }

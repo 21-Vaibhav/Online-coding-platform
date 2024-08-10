@@ -1,90 +1,58 @@
-import React, { useEffect, useState } from "react";
-import Split from "react-split";
-import ArenaCodeEditor from "./ArenaCodeEditor";
-import ProblemDescription from "./ProblemDescription";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const Workspace = ({ problemId }) => {
+const Workspace = () => {
+  const { id } = useParams();
   const [problem, setProblem] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProblem = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3001/problem/${problemId}`
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setProblem(data.data);
-        setLoading(false);
+        const response = await axios.get(`http://localhost:3001/problem/${id}`);
+        setProblem(response.data.data);
       } catch (error) {
-        console.error("Error fetching problem:", error);
-        setError(error.message);
-        setLoading(false);
+        console.error('Error fetching problem:', error);
       }
     };
 
-    if (problemId) {
-      fetchProblem();
-    }
-  }, [problemId]);
+    fetchProblem();
+  }, [id]);
 
-  const splitStyle = {
-    display: "flex",
-    height: "100vh",
-  };
-
-  const sectionStyle = {
-    overflow: "auto",
-    flex: 1,
-    backgroundColor: "#1e1e1e",
-    color: "white",
-    padding: "20px",
-    boxSizing: "border-box",
-  };
-
-  const editorStyle = {
-    ...sectionStyle,
-    backgroundColor: "#252526",
-  };
-
-  // Select the first test case for simplicity
-  const testCase =
-    problem && problem.testCases && problem.testCases.length > 0
-      ? problem.testCases[0]
-      : null;
+  if (!problem) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <Split
-      sizes={[50, 50]}
-      direction="horizontal"
-      cursor="col-resize"
-      style={splitStyle}
-    >
-      <div style={sectionStyle}>
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : problem ? (
-          <ProblemDescription
-            title={problem.title}
-            description={problem.description}
-            input={testCase ? testCase.input : "No input available"}
-            output={testCase ? testCase.output : "No output available"}
-          />
-        ) : (
-          <p>No problem data found</p>
-        )}
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 dark:text-gray-200 mt-12 mb-6">
+        {problem.title}
+      </h1>
+      <p className="text-lg text-gray-700 dark:text-gray-300 mb-6 whitespace-pre-line">
+        {problem.description}
+      </p>
+      <div className="mb-6">
+        <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
+          Test Cases
+        </h2>
+        {problem.testCases.map((testCase, index) => (
+          <div key={testCase._id} className="mb-4">
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              Test Case {index + 1}
+            </h3>
+            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
+              <strong>Input:</strong> {testCase.input}
+            </pre>
+            <pre className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md mt-2">
+              <strong>Output:</strong> {testCase.output}
+            </pre>
+          </div>
+        ))}
       </div>
-
-      <div style={editorStyle}>
-        <ArenaCodeEditor />
-      </div>
-    </Split>
+      <p className="text-lg text-gray-700 dark:text-gray-300">
+        <strong>Difficulty:</strong> {problem.difficulty}
+      </p>
+    </div>
   );
 };
 

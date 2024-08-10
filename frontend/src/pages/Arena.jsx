@@ -1,6 +1,6 @@
-// src/components/ProblemTable.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const ProblemTable = () => {
   const [problems, setProblems] = useState([]);
@@ -38,9 +38,13 @@ const ProblemTable = () => {
           </thead>
           <tbody className="text-gray-700 dark:text-gray-300">
             {sortedProblems.map(problem => (
-              <tr key={problem._id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
+              <tr key={problem.id} className="hover:bg-gray-100 dark:hover:bg-gray-700">
                 <td className="border px-6 py-4">{problem.order}</td>
-                <td className="border px-6 py-4">{problem.title}</td>
+                <td className="border px-6 py-4">
+                  <Link to={`/workspace/${problem.id}`} state={{ probleID : "two-sum"}} className="text-blue-500 hover:underline">
+                    {problem.title}
+                  </Link>
+                </td>
                 <td className="border px-6 py-4">{problem.difficulty}</td>
                 <td className="border px-6 py-4">{problem.category}</td>
               </tr>
