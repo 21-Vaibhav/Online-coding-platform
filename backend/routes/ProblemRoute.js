@@ -3,12 +3,12 @@ import { Problem } from "../models/Problem.js";
 
 const router = express.Router();
 
-router.post('/problem', async (request, response) => {
+router.post('/', async (request, response) => {
     try {
         const { id, title, description, testCases, difficulty } = request.body;
 
         // Validate required fields
-        if (!id || !title || !description || !difficulty || !category || order === undefined) {
+        if (!id || !title || !description || !difficulty === undefined) {
             return response.status(400).send({
                 message: 'Send all required fields: id, title, description, difficulty, category, order'
             });
@@ -33,7 +33,7 @@ router.post('/problem', async (request, response) => {
     }
 });
 
-router.get('/problem', async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         // Fetch all problems from the database
         const problems = await Problem.find({});
