@@ -8,14 +8,14 @@ import Workspace from "./components/Workspace";
 
 function App() {
 
-
+  const problemId = "two-sum";
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/playground" element={<Playground />} />
       <Route path="/arena" element={<Arena />} />
       <Route path="/battleground" element={<BattleGround />} />
-      <Route path="/workspace" element={<Workspace />} />
+      <Route path="/workspace" element={<Workspace problemId={problemId} />} />
     </Routes>
   );
 }

@@ -1,13 +1,37 @@
-
-import { useState } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Split from "react-split";
-import CodeEditor from "./CodeEditor";
+import ArenaCodeEditor from "./ArenaCodeEditor";
 import ProblemDescription from "./ProblemDescription";
 
-const Workspace = () => {
+const Workspace = ({ problemId }) => {
+  const [problem, setProblem] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProblem = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/problem/${problemId}`
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setProblem(data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching problem:", error);
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    if (problemId) {
+      fetchProblem();
+    }
+  }, [problemId]);
+
   const splitStyle = {
     display: "flex",
     height: "100vh",
@@ -16,51 +40,49 @@ const Workspace = () => {
   const sectionStyle = {
     overflow: "auto",
     flex: 1,
-    backgroundColor: "#1e1e1e", // Same background as the original CSS
+    backgroundColor: "#1e1e1e",
     color: "white",
     padding: "20px",
     boxSizing: "border-box",
   };
 
   const editorStyle = {
-    ...sectionStyle, // inherit styles from sectionStyle
-    backgroundColor: "#252526", // Different background for the editor
+    ...sectionStyle,
+    backgroundColor: "#252526",
   };
 
-  const [problem, setProblem] = useState(null);
-
-  useEffect(() => {
-    const fetchProblem = async () => {
-      try {
-        const response = await fetch("/api/problem");
-        const data = await response.json();
-        setProblem(data);
-      } catch (error) {
-        console.error("Error fetching problem:", error);
-      }
-    };
-
-    fetchProblem();
-  }, []);
+  // Select the first test case for simplicity
+  const testCase =
+    problem && problem.testCases && problem.testCases.length > 0
+      ? problem.testCases[0]
+      : null;
 
   return (
     <Split
-      sizes={[50, 50]} // 50-50 split
-      direction="horizontal" // Horizontal split
+      sizes={[50, 50]}
+      direction="horizontal"
       cursor="col-resize"
-      style={splitStyle} // Inline style for the container
+      style={splitStyle}
     >
       <div style={sectionStyle}>
-        <ProblemDescription
-          title="Two Sum"
-          description="You are given an array of n integers, and your task is to find two values (at distinct positions) whose sum is x."
-          input="The first input line has two integers n and x: the array size and the target sum."
-          output="Print two integers: the positions of the values. If there are several solutions, you may print any of them. If there are no solutions, print -1."
-        />
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : problem ? (
+          <ProblemDescription
+            title={problem.title}
+            description={problem.description}
+            input={testCase ? testCase.input : "No input available"}
+            output={testCase ? testCase.output : "No output available"}
+          />
+        ) : (
+          <p>No problem data found</p>
+        )}
       </div>
 
       <div style={editorStyle}>
-        <CodeEditor />
+        <ArenaCodeEditor />
       </div>
     </Split>
   );

@@ -1,7 +1,5 @@
-
 import React, { useState } from "react";
 import axios from "axios";
-import Prism from "prismjs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism"; // Choose a style
 
@@ -9,7 +7,6 @@ function CodeEditor() {
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
-  // const [language, setLanguage] = useState("cpp");
 
   const handleChange = (e) => {
     setCode(e.target.value);
@@ -21,15 +18,31 @@ function CodeEditor() {
         code,
         input,
       });
-      setOutput(response.data.output);
+
+      const { output, compileTime, executionTime, memoryUsage } = response.data;
+
+      // Format the output to include compile time, execution time, and memory usage
+      const formattedOutput = 
+      `Output:
+${output}
+
+Compile Time: ${compileTime} ms
+Execution Time: ${executionTime} ms
+Memory Usage: ${memoryUsage.toFixed(2)} MB`;
+
+      setOutput(formattedOutput);
     } catch (error) {
-      setOutput(error.response.data.error);
+      const errorOutput = `
+Error:
+${error.response.data.error}
+
+Compile Time: N/A
+Execution Time: N/A
+Memory Usage: N/A`;
+
+      setOutput(errorOutput);
     }
   };
-
-  // const highlightCode = (code) => {
-  //   return Prism.highlight(code, Prism.languages.cpp, 'cpp');
-  // };
 
   return (
     <div style={{ padding: "20px" }}>
