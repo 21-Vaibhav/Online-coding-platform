@@ -3,12 +3,12 @@ import { Problem } from "../models/Problem.js";
 
 const router = express.Router();
 
-router.post('/problem', async (request, response) => {
+router.post('/', async (request, response) => {
     try {
         const { id, title, description, testCases, difficulty } = request.body;
 
         // Validate required fields
-        if (!id || !title || !description || !difficulty || !category || order === undefined) {
+        if (!id || !title || !description || !difficulty === undefined) {
             return response.status(400).send({
                 message: 'Send all required fields: id, title, description, difficulty, category, order'
             });
@@ -33,7 +33,7 @@ router.post('/problem', async (request, response) => {
     }
 });
 
-router.get('/problem', async (request, response) => {
+router.get('/', async (request, response) => {
     try {
         // Fetch all problems from the database
         const problems = await Problem.find({});
@@ -42,6 +42,22 @@ router.get('/problem', async (request, response) => {
         return response.status(200).json({
             count: problems.length,
             data: problems,
+        });
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send({ message: error.message });
+    }
+});
+
+router.get('/:id', async (request, response) => {
+    try {
+        // Fetch all problems from the database
+        const { id } = request.params;
+        const problem = await Problem.findById(id);
+
+        // Return the list of problems in JSON format
+        return response.status(200).json({
+            data: problem,
         });
     } catch (error) {
         console.log(error.message);
