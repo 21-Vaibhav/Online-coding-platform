@@ -2,6 +2,7 @@ import express from "express";
 //import routes
 import CompileRoute from './routes/CompileRoute.js';
 import ProblemListRoute from "./routes/ProblemListRoute.js";
+import ProblemRoute from "./routes/ProblemRoute.js";
 
 import cors from "cors";
 import mongoose from "mongoose";
