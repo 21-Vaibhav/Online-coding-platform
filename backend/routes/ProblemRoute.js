@@ -49,4 +49,20 @@ router.get('/', async (request, response) => {
     }
 });
 
+router.get('/:id', async (request, response) => {
+    try {
+        // Fetch all problems from the database
+        const { id } = request.params;
+        const problem = await Problem.findById(id);
+
+        // Return the list of problems in JSON format
+        return response.status(200).json({
+            data: problem,
+        });
+    } catch (error) {
+        console.log(error.message);
+        return response.status(500).send({ message: error.message });
+    }
+});
+
 export default router;
