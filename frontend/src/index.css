@@ -17,3 +17,30 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
     cursor: col-resize;
 }
+
+.code-editor {
+  display: flex;
+  flex-direction: column;
+}
+
+.code-textarea {
+  font-family: monospace;
+  margin-bottom: 10px;
+}
+
+.code-preview {
+  white-space: pre-wrap;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+
+.keyword {
+  color: blue;
+  font-weight: bold;
+}
+
+.string {
+  color: green;
+}

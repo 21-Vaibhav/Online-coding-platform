@@ -4,15 +4,13 @@ import Prism from "prismjs";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { solarizedlight } from "react-syntax-highlighter/dist/esm/styles/prism"; // Choose a style
 
-function ArenaCodeEditor({id}) {
-
+function ArenaCodeEditor({ id }) {
   const [code, setCode] = useState("");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [solution, setSolution] = useState("");
   // const [language, setLanguage] = useState("cpp");
 
-  
   const [problem, setProblem] = useState(null);
 
   useEffect(() => {
@@ -21,13 +19,11 @@ function ArenaCodeEditor({id}) {
         const response = await axios.get(`http://localhost:3001/problem/${id}`);
         setProblem(response.data.data);
       } catch (error) {
-        console.error('Error fetching problem:', error);
+        console.error("Error fetching problem:", error);
       }
     };
     fetchProblem();
   }, [id]);
-
- 
 
   if (!problem) {
     return <div>Loading...</div>;
@@ -45,8 +41,7 @@ function ArenaCodeEditor({id}) {
       const { output, compileTime, executionTime, memoryUsage } = response.data;
 
       // Format the output to include compile time, execution time, and memory usage
-      const formattedOutput = 
-      `Output:
+      const formattedOutput = `Output:
 ${output}
 
 Compile Time: ${compileTime} ms
@@ -69,17 +64,17 @@ Memory Usage: N/A`;
 
   const test = problem.testCases;
 
-  const handleSubmit = async () => {    
+  const handleSubmit = async () => {
     try {
-        const response = await axios.post("http://localhost:3001/submit", { 
-            code,
-            testCases: problem.testCases,
-        });
-        setSolution(response.data.results);
+      const response = await axios.post("http://localhost:3001/submit", {
+        code,
+        testCases: problem.testCases,
+      });
+      setSolution(response.data.results);
     } catch (error) {
-        setSolution(error.response.data.error);
+      setSolution(error.response.data.error);
     }
-};
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -170,20 +165,28 @@ Memory Usage: N/A`;
       <pre style={{ background: "lightgray", padding: "10px", color: "black" }}>
         {output}
       </pre>
-    {solution && (
+      {solution && (
         <div>
-            <h3>Results:</h3>
-            {solution.map((result, index) => (
-                <div key={index} style={{ marginBottom: '10px' }}>
-                    <p><strong>Test Case {index + 1}:</strong></p>
-                    <p><strong>Passed:</strong> {result.passed ? "Yes" : "No"}</p>
-                    <p><strong>Output:</strong> {result.output}</p>
-                    <p><strong>Expected Output:</strong> {result.expectedOutput}</p>
-                </div>
-            ))}
+          <h3>Results:</h3>
+          {solution.map((result, index) => (
+            <div key={index} style={{ marginBottom: "10px" }}>
+              <p>
+                <strong>Test Case {index + 1}:</strong>
+              </p>
+              <p>
+                <strong>Passed:</strong> {result.passed ? "Yes" : "No"}
+              </p>
+              <p>
+                <strong>Output:</strong> {result.output}
+              </p>
+              <p>
+                <strong>Expected Output:</strong> {result.expectedOutput}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-)}
-</div>
   );
 }
 
