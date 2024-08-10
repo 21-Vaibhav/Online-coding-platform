@@ -152,6 +152,7 @@ Memory Usage: N/A`;
       >
         Compile & Run
       </button>
+      <span>            </span>
       <button
         className="px-8 py-4 rounded-medium border-2 border-blue-400"
         onClick={handleSubmit}
