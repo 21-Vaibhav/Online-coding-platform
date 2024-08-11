@@ -1,5 +1,5 @@
 # Online Coding Platform
-Hey there! here's the step by step installation of your project on your machine! 
+Hey there! here's the step by step installation of our project on your machine! 
 
 This is an online coding platform built with the MERN stack (MongoDB, Express, React, Node.js). Follow the instructions below to set up and run the project on your local machine.
 
