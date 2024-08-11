@@ -1,85 +1,79 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const Contest = () => {
-  const { _id } = useParams();
-  const [problems, setProblems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { name } = useParams(); // Get the contest ID from the route parameters
+  const [contest, setContest] = useState(null);
+  const [problemsDetails, setProblemsDetails] = useState([]); // State to store problem details
 
   useEffect(() => {
     const fetchContest = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3001/battleground/${_id}`
-        );
-        const contestData = response.data.data;
+        const response = await axios.get(`http://localhost:3001/battleground/${name}`);
+        const data = response.data.data;
+        setContest(data);
+        
+        // Extract problem IDs into a string array
+        const ids = data.problems.map(problem => problem.id);
 
-        const problemIds = contestData.problems.map((p) => p.id);
+        // Fetch details for each problem
+        const fetchProblemsDetails = async () => {
+          try {
+            const detailsPromises = ids.map(problemId =>
+              axios.get(`http://localhost:3001/problem/${problemId}`)
+            );
+            const results = await Promise.all(detailsPromises);
+            
+            // Debugging logs
+            console.log("Problem details fetched:", results.map(result => result.data.data));
 
-        const problemResponses = await Promise.all(
-          problemIds.map((id) =>
-            axios.get(`http://localhost:3001/problem/${id}`)
-          )
-        );
+            setProblemsDetails(results.map(result => result.data.data));
+          } catch (error) {
+            console.error("Error fetching problem details:", error);
+          }
+        };
 
-        const problemsData = problemResponses.map((r) => r.data);
-        setProblems(problemsData);
+        fetchProblemsDetails();
       } catch (error) {
-        setError("Error fetching problems");
-        console.error("Error fetching problems:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching contest details:", error);
       }
     };
 
     fetchContest();
-  }, [_id]);
+  }, [name]); // Re-fetch the contest if the ID changes
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
-  const sortedProblems = [...problems].sort((a, b) => a.order - b.order);
+  if (!contest) {
+    return <p className="text-center text-gray-600">Loading contest details...</p>; // Display a loading message or spinner
+  }
 
   return (
-    <>
-      <h1 className="text-3xl font-semibold text-center text-gray-800 dark:text-gray-200 mt-12 mb-6">
-        Problems to Solve
-      </h1>
-      <div className="container mx-auto p-6">
-        <table className="min-w-full bg-black border border-gray-200 rounded-lg shadow-md">
-          <thead className="bg-gray-800 text-white">
+    <div className="container mx-auto p-8 bg-gray-100 rounded-lg shadow-md">
+      <h1 className="text-4xl font-bold text-gray-900 mb-6">{contest.name}</h1>
+      <div className="mt-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Problems</h2>
+        <table className="min-w-full divide-y divide-gray-300 bg-white rounded-lg shadow-sm">
+          <thead className="bg-gray-200">
             <tr>
-              <th className="border px-6 py-3 text-left">Order</th>
-              <th className="border px-6 py-3 text-left">Title</th>
-              <th className="border px-6 py-3 text-left">Difficulty</th>
-              <th className="border px-6 py-3 text-left">Category</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                Title
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                Difficulty
+              </th>
             </tr>
           </thead>
-          <tbody className="text-gray-700 dark:text-gray-300">
-            {sortedProblems.map((problem) => (
-              <tr
-                key={problem.id}
-                className="hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <td className="border px-6 py-4">{problem.order}</td>
-                <td className="border px-6 py-4">
-                  <Link
-                    to={`/workspace/${problem.id}`}
-                    className="text-blue-500 hover:underline"
-                  >
-                    {problem.title}
-                  </Link>
-                </td>
-                <td className="border px-6 py-4">{problem.difficulty}</td>
-                <td className="border px-6 py-4">{problem.category}</td>
+          <tbody className="divide-y divide-gray-300">
+            {problemsDetails.map((problem) => (
+              <tr key={problem.id} className="hover:bg-gray-50">
+                <td className="px-6 py-4 text-sm text-gray-700">{problem.title}</td>
+                <td className="px-6 py-4 text-sm text-gray-700">{problem.difficulty}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 

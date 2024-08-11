@@ -36,7 +36,7 @@ const ContestTable = () => {
            >
              <h2 className="text-xl font-semibold text-blue-500">
                <Link
-                 to={`/contest/${contest._id}`} // Updated to use contest ID in the link
+                 to={`/contest/${contest.name}`} // Updated to use contest ID in the link
                  className="hover:underline"
                >
                  {contest.name}

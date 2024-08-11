@@ -16,7 +16,7 @@ function App() {
       <Route path="/arena" element={<Arena />} />
       <Route path="/battleground" element={<BattleGround />} />
       <Route path="/workspace/:id" element={<Workspace />} />
-      <Route path="/contest/:_id" element={<Contest />} />
+      <Route path="/contest/:name" element={<Contest />} />
     </Routes>
   );
 }
