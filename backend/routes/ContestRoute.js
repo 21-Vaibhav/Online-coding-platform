@@ -50,13 +50,13 @@ router.get('/', async (request, response) => {
     }
 });
 
-router.get("/:_id", async (request, response) => {
+router.get("/:name", async (request, response) => {
     try {
-        const { id } = request.params;
-        console.log(`Fetching contest with ID: ${id}`);
+        const { name} = request.params;
+        console.log(`Fetching contest with ID: ${name}`);
 
         // Query by the `id` field instead of `_id`
-        const contest = await Contest.findOne({ id });
+        const contest = await Contest.findOne({ name });
 
         if (!contest) {
             return response.status(404).json({ message: "Contest not found" });
