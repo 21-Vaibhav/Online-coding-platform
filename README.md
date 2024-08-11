@@ -18,33 +18,32 @@ Make sure you have the following installed on your machine:
 ### Installation
 
 1. **Clone the repository:** 
-``bash
+```bash
    git clone https://github.com/21-Vaibhav/Online-coding-platform.git
    cd Online-coding-platform
-
+```
 Install dependencies for both the frontend and backend:
-
 Frontend:
-``bash
+```bash
 cd frontend
 npm install
-
+```
 Backend:
 ``bash
 cd ../backend
 npm install
-
+```
 Running the Application
 Start the frontend development server:
-``bash
+```bash
 cd frontend
 npm run dev
-
+```
 Start the backend server:
-``bash
+```bash
 cd ../backend
 node server.js
-
+```
 Open the application in your browser:
 
 Use the port provided in the terminal when you run the above commands to open the application in your browser.
