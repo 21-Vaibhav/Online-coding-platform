@@ -5,6 +5,7 @@ import Arena from "./pages/Arena";
 import Home from "./pages/Home";
 import BattleGround from "./pages/BattleGround";
 import Workspace from "./components/Workspace";
+import Contest from "./components/Contest" 
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Route path="/arena" element={<Arena />} />
       <Route path="/battleground" element={<BattleGround />} />
       <Route path="/workspace/:id" element={<Workspace />} />
+      <Route path="/contest/:_id" element={<Contest />} />
     </Routes>
   );
 }
