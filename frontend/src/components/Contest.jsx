@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Contest = () => {
   const { name } = useParams(); // Get the contest ID from the route parameters
@@ -66,8 +67,18 @@ const Contest = () => {
           <tbody className="divide-y divide-gray-300">
             {problemsDetails.map((problem) => (
               <tr key={problem.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 text-sm text-gray-700">{problem.title}</td>
-                <td className="px-6 py-4 text-sm text-gray-700">{problem.difficulty}</td>
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  <Link
+                    to={`/workspace/${problem.id}`}
+                    state={{ probleID: "two-sum" }}
+                    className="text-blue-500 hover:underline"
+                  >
+                    {problem.title}
+                  </Link>
+                </td>
+                <td className="px-6 py-4 text-sm text-gray-700">
+                  {problem.difficulty}
+                </td>
               </tr>
             ))}
           </tbody>
