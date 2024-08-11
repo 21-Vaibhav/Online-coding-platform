@@ -1,5 +1,6 @@
 # Online Coding Platform
-Hey there! here's the step by step installation of our project on your machine! 
+
+Hey there! Here's the step-by-step installation guide to set up our project on your machine!
 
 This is an online coding platform built with the MERN stack (MongoDB, Express, React, Node.js). Follow the instructions below to set up and run the project on your local machine.
 
@@ -9,38 +10,47 @@ This is an online coding platform built with the MERN stack (MongoDB, Express, R
 
 Make sure you have the following installed on your machine:
 
-- **Node.js** (https://nodejs.org/)
+- **[Node.js](https://nodejs.org/)**
 - **npm** (comes with Node.js)
 - **MongoDB** (you can use MongoDB Atlas for a cloud-based database)
-- **G++ compiler** (so you can use our own custom built code editor present in the code playground page!)
+- **G++ compiler** (so you can use our custom-built code editor present on the code playground page!)
 
 ### Installation
 
 1. **Clone the repository:**
 
-git clone https://github.com/21/online-coding-platform.git](https://github.com/21-Vaibhav/Online-coding-platform.git
-cd Online-coding-platform
-
-   
-2.Install dependencies for both the frontend and backend:
+   ```bash
+   git clone https://github.com/21-Vaibhav/Online-coding-platform.git
+   cd Online-coding-platform
+Install dependencies for both the frontend and backend:
 
 Frontend:
+
+bash
+Copy code
 cd frontend
 npm install
-
 Backend:
+
+bash
+Copy code
 cd ../backend
 npm install
-
-3. Running the Application:
-
+Running the Application
 Start the frontend development server:
+
+bash
+Copy code
 cd frontend
 npm run dev
+Start the backend server:
 
-4. Start the backend server:
+bash
+Copy code
 cd ../backend
 node server.js
 Open the application in your browser:
 
 Use the port provided in the terminal when you run the above commands to open the application in your browser.
+
+Enjoy coding and exploring the platform!
