@@ -29,10 +29,11 @@ cd frontend
 npm install
 ```
 Backend:
-``bash
+```bash
 cd ../backend
 npm install
 ```
+
 Running the Application
 Start the frontend development server:
 ```bash
