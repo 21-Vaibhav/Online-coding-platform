@@ -12,14 +12,14 @@ Make sure you have the following installed on your machine:
 - **Node.js** (https://nodejs.org/)
 - **npm** (comes with Node.js)
 - **MongoDB** (you can use MongoDB Atlas for a cloud-based database)
-- **Gcc compiler** (so you can use our own custom built code editor present in the code playground page!)
+- **G++ compiler** (so you can use our own custom built code editor present in the code playground page!)
 
 ### Installation
 
 1. **Clone the repository:**
 
-git clone https://github.com/yourusername/online-coding-platform.git
-cd online-coding-platform
+git clone https://github.com/21/online-coding-platform.git](https://github.com/21-Vaibhav/Online-coding-platform.git
+cd Online-coding-platform
 
    
 2.Install dependencies for both the frontend and backend:
