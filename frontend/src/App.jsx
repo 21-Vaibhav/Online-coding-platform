@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import BattleGround from "./pages/BattleGround";
 import Workspace from "./components/Workspace";
 import Contest from "./components/Contest" 
+import AddProblem from "./components/AddProblem";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/battleground" element={<BattleGround />} />
       <Route path="/workspace/:id" element={<Workspace />} />
       <Route path="/contest/:name" element={<Contest />} />
+      <Route path="/addproblem" element={<AddProblem />} /> 
     </Routes>
   );
 }
